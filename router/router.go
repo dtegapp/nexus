@@ -47,6 +47,8 @@ type Router interface {
 	// When Nexus is used as a pluggable library sometimes it is
 	// usefully to expose WAMP features current version provides.
 	RouterFeatures() *wamp.Dict
+
+	GetRealm(wamp.URI) (*realm, error)
 }
 
 // router is the default WAMP router implementation.
