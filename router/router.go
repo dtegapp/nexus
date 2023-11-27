@@ -338,6 +338,14 @@ func (r *router) RouterFeatures() *wamp.Dict {
 	}
 }
 
+func (r *router) GetRealm(uri wamp.URI) (*realm, error) {
+	if realm, ok := r.realms[uri]; !ok {
+		return nil, errors.New("Cannot Find Realms" + string(uri))
+	} else {
+		return realm, nil
+	}
+}
+
 // RemoveRealm will close and then remove a realm from this router, if the realm exists.
 func (r *router) RemoveRealm(name wamp.URI) {
 	// Because we want to force atomicity as briefly as possible, the atomic
