@@ -47,6 +47,7 @@ type Router interface {
 	// When Nexus is used as a pluggable library sometimes it is
 	// usefully to expose WAMP features current version provides.
 	RouterFeatures() *wamp.Dict
+	GetRealm(wamp.URI) (*realm, error) //Taiminko 250829 Session kill!!
 }
 
 // router is the default WAMP router implementation.
@@ -337,7 +338,13 @@ func (r *router) RouterFeatures() *wamp.Dict {
 		},
 	}
 }
-
+func (r *router) GetRealm(uri wamp.URI) (*realm, error) {
+	if realm, ok := r.realms[uri]; !ok {
+		return nil, errors.New("Cannot Find Realms" + string(uri))
+	} else {
+		return realm, nil
+	}
+}
 // RemoveRealm will close and then remove a realm from this router, if the realm exists.
 func (r *router) RemoveRealm(name wamp.URI) {
 	// Because we want to force atomicity as briefly as possible, the atomic
