@@ -1657,7 +1657,11 @@ func (c *Client) runHandleInvocation(msg *wamp.Invocation) {
 
 					if isInProgress, _ := msg.Details[wamp.OptProgress].(bool); !isInProgress {
 						c.sess.Lock()
-						close(c.invHandlersQueues[cliInvocation])
+						if c.invHandlersQueues[cliInvocation] != nil {
+							close(c.invHandlersQueues[cliInvocation])
+						} else {
+							fmt.Println("Taiminko. Handler queue already closed or not found")
+						}
 						delete(c.invHandlersQueues, cliInvocation)
 						delete(c.invHandlersCtxs, cliInvocation)
 						c.sess.Unlock()
