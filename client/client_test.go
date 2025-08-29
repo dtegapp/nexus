@@ -15,11 +15,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/goleak"
 
-	"github.com/gammazero/nexus/v3/router"
-	"github.com/gammazero/nexus/v3/router/auth"
-	"github.com/gammazero/nexus/v3/stdlog"
-	"github.com/gammazero/nexus/v3/wamp"
-	"github.com/gammazero/nexus/v3/wamp/crsign"
+	"github.com/dtegapp/nexus/v3/router"
+	"github.com/dtegapp/nexus/v3/router/auth"
+	"github.com/dtegapp/nexus/v3/stdlog"
+	"github.com/dtegapp/nexus/v3/wamp"
+	"github.com/dtegapp/nexus/v3/wamp/crsign"
 )
 
 const (

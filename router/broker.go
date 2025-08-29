@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/dtegapp/nexus/v3/stdlog"
+	"github.com/dtegapp/nexus/v3/wamp"
 	"github.com/gammazero/deque"
-	"github.com/gammazero/nexus/v3/stdlog"
-	"github.com/gammazero/nexus/v3/wamp"
 )
 
 const (

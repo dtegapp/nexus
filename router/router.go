@@ -14,8 +14,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gammazero/nexus/v3/stdlog"
-	"github.com/gammazero/nexus/v3/wamp"
+	"github.com/dtegapp/nexus/v3/stdlog"
+	"github.com/dtegapp/nexus/v3/wamp"
 )
 
 const helloTimeout = 5 * time.Second
@@ -345,6 +345,7 @@ func (r *router) GetRealm(uri wamp.URI) (*realm, error) {
 		return realm, nil
 	}
 }
+
 // RemoveRealm will close and then remove a realm from this router, if the realm exists.
 func (r *router) RemoveRealm(name wamp.URI) {
 	// Because we want to force atomicity as briefly as possible, the atomic
