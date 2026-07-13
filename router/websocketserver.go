@@ -333,8 +333,12 @@ func (s *WebsocketServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	conn, err := s.Upgrader.Upgrade(w, r, w.Header())
 	if err != nil {
+		// Taiminko 20260713: gorilla/websocket의 Upgrade()는 실패 시 이미 자체적으로
+		// http.Error()를 호출해 응답을 써버린다(server.go returnError()). 여기서 다시
+		// http.Error()를 부르면 이미 커밋된 ResponseWriter에 중복 쓰기가 되어 Go net/http가
+		// "superfluous response.WriteHeader call" 경고를 남긴다(기능상 무해하나 로그 노이즈 +
+		// 이 err.Error() 메시지는 클라이언트에 실제로 전달되지 않고 폐기됨). 로그만 남기고 종료.
 		s.router.Logger().Println("Error upgrading to websocket connection:", err)
-		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
