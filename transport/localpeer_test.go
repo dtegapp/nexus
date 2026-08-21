@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/gammazero/nexus/v3/transport"
-	"github.com/gammazero/nexus/v3/wamp"
+	"github.com/dtegapp/nexus/v3/transport"
+	"github.com/dtegapp/nexus/v3/wamp"
 )
 
 func TestSendRecv(t *testing.T) {

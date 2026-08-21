@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gammazero/nexus/v3/stdlog"
-	"github.com/gammazero/nexus/v3/wamp"
+	"github.com/dtegapp/nexus/v3/stdlog"
+	"github.com/dtegapp/nexus/v3/wamp"
 )
 
 const helloTimeout = 5 * time.Second
@@ -46,6 +46,10 @@ type Router interface {
 	// is used as a pluggable library sometimes it is usefully to expose WAMP
 	// features current version provides.
 	RouterFeatures() *wamp.Dict
+
+	// GetRealm은 URI로 realm을 찾아 돌려준다. DCS는 CDN이 프론트엔드 세션을 강제
+	// 종료할 때(realm.SessionKill, realm_dcs.go) 이 접근자가 필요하다. Taiminko 250829
+	GetRealm(wamp.URI) (*realm, error)
 }
 
 // router is the default WAMP router implementation.
@@ -393,4 +397,13 @@ func (r *router) run() {
 		action()
 	}
 	close(r.stopped)
+}
+
+// GetRealm: Router 인터페이스 구현. 없는 realm이면 오류를 돌려준다.
+func (r *router) GetRealm(uri wamp.URI) (*realm, error) {
+	realm, ok := r.realms[uri]
+	if !ok {
+		return nil, errors.New("Cannot Find Realms" + string(uri))
+	}
+	return realm, nil
 }
